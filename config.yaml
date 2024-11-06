@@ -1,0 +1,13 @@
+server:
+  plain_port: "25"
+  port: "587"
+  tls_enabled: true
+  smtp_authentication:
+    enabled: true
+    users:
+      - email: "dennis@thecurtainshop.com"
+        password: "securepassword"
+  cert_file: "server.crt"
+  key_file: "server.key"
+logging:
+  level: "info"
