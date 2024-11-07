@@ -12,13 +12,16 @@ RUN go mod download
 COPY . .
 
 # Build the Go executable
-RUN go build -o smtp-email-server   -buildvcs=false
+RUN go build -o smtp-email-server   &&  ls  -la   -buildvcs=false
 
 # Start a new image for the final runtime
 FROM alpine:latest
 
 # Copy the built executable from the builder stage
 COPY --from=builder /app/smtp-email-server /usr/local/bin/smtp-email-server
+
+# Executable permissions
+RUN chmod +x /usr/local/bin/smtp-email-server
 
 # Expose the port your server listens on (e.g, port 8080)
 EXPOSE 8080
