@@ -2,11 +2,28 @@ package main
 
 import (
 	"crypto/tls"
+	"fmt"
 	"log"
 	"net"
+	"net/http"
+	"os"
 )
 
 func startServer() {
+	// Check if the certificate and key files exist
+	if _, err := os.Stat("server.crt"); os.IsNotExist(err) {
+		log.Fatal("Server.crt not found! Please run the certificate generation script.")
+	}
+	if _, err := os.Stat("server.key"); os.IsNotExist(err) {
+		log.Fatal("server.key not found! Please")
+	}
+
+	// If the files exist, start the server with SSL
+	fmt.Println("Starting server with SSL...")
+	err := http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Load TLS certificate and key
 	cert, err := tls.LoadX509KeyPair(config.Server.CertFile, config.Server.KeyFile)
