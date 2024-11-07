@@ -12,7 +12,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go executable
-RUN go build -o smtp-email-server   &&  ls  -la   -buildvcs=false
+RUN go build -o smtp-email-server   -buildvcs=false
 
 # Start a new image for the final runtime
 FROM alpine:latest
